@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Karla:wght@300;400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #f6f1e7;
+  --color-paper-deep: #eee7d7;
+  --color-ink: #26301f;
+  --color-moss: #4f5d2f;
+  --color-olive: #7a8038;
+  --color-gold: #a97826;
+  --color-clay: #a8653c;
+  --font-display: Fraunces, Georgia, serif;
+  --font-sans: Karla, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { margin: 0; background: #f6f1e7; color: #26301f; font-family: Karla, "Segoe UI", sans-serif; overflow-x: clip; }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  opacity: .28;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+}
+::selection { background: #d9a94e; color: #26301f; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #a97826; outline-offset: 3px; }
+.display { font-family: Fraunces, Georgia, serif; }
+.balance { text-wrap: balance; }
+.section-index { display: flex; align-items: center; gap: 1.1rem; color: #a97826; font-size: .7rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+.section-index::after { content: ""; width: 3rem; height: 1px; background: rgba(38,48,31,.16); }
+.marquee-track { animation: marquee 38s linear infinite; }
+.soap-float { animation: soap-float 6s ease-in-out infinite alternate; }
+.badge-spin { animation: badge-spin 22s linear infinite; }
+.petal { animation-name: petal-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
+.hero-enter { animation: rise 1s cubic-bezier(.22,1,.36,1) both; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes soap-float { to { transform: translateY(-12px); } }
+@keyframes badge-spin { to { transform: rotate(360deg); } }
+@keyframes petal-fall { 72% { opacity: 1; } to { transform: translateY(114vh) rotate(160deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track, .soap-float, .badge-spin, .petal, .hero-enter { animation: none; }
+}
