@@ -39,6 +39,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .petal { animation-name: petal-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
 .hero-enter { animation: rise 1s cubic-bezier(.22,1,.36,1) both; }
 .quiz-enter { animation: quiz-enter .45s cubic-bezier(.22,1,.36,1) both; }
+.contact-field { transition: border-color .3s ease, box-shadow .3s ease; }
+.contact-field:focus, .contact-field:focus-visible, .contact-field[data-open="true"] {
+  outline: none;
+  border-bottom-color: rgba(169,120,38,.52);
+  box-shadow: 0 10px 12px -12px rgba(169,120,38,.95);
+}
 @keyframes marquee { to { transform: translateX(-50%); } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes quiz-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

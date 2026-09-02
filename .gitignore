@@ -9,6 +9,7 @@
 # local files
 *.tsbuildinfo
 .env*
+.env.local
 !.env.example
 
 # system files
