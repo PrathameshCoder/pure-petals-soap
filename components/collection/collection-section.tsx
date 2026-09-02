@@ -18,7 +18,7 @@ export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void
     <section id="collection" className="bg-paper-deep py-[clamp(5rem,9vw,8.5rem)]">
       <div className="mx-auto w-[min(1200px,92vw)]">
         <div className="mb-12 flex items-end justify-between gap-8">
-          <div><Reveal><p className="section-index">02 — The collection</p></Reveal><h2 className="display mt-5 text-[clamp(2.4rem,5vw,4.2rem)] font-normal leading-[1.04]">Six bars,<br /><em>six temperaments.</em></h2></div>
+          <div><Reveal><p className="section-index">01 — The collection</p></Reveal><h2 className="display mt-5 text-[clamp(2.4rem,5vw,4.2rem)] font-normal leading-[1.04]">Seven bars,<br /><em>seven temperaments.</em></h2></div>
           <Reveal delay={200} className="hidden text-right text-sm leading-6 text-ink/50 md:block">Hover a bar to preview it<br />click to read its story</Reveal>
         </div>
         <div className="border-t border-ink/20">
@@ -26,10 +26,13 @@ export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void
             const open = openId === product.id;
             return (
               <Reveal key={product.id} delay={index * 60}>
-                <article className="border-b border-ink/20">
+                <article id={`product-${product.id}`} className="scroll-mt-24 border-b border-ink/20">
                   <button className="grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-6 text-left md:grid-cols-[4rem_1.1fr_1fr_4rem_auto] md:py-8" onClick={() => { setOpenId(open ? null : product.id); setPreview(null); }} onMouseEnter={(event) => { if (!open) movePreview(event, product); }} onMouseMove={(event) => { if (!open) movePreview(event, product); }} onMouseLeave={() => setPreview(null)} aria-expanded={open}>
                     <span className="text-[.66rem] font-bold tracking-[.2em] text-gold">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="display text-[clamp(1.8rem,4vw,3.4rem)] leading-none">{product.name}</span>
+                    <span className="flex flex-wrap items-center gap-3">
+                      {product.id === "crimson" && <span className="rounded-full border border-[#722F37]/35 bg-[#722F37]/10 px-2.5 py-1 text-[.58rem] font-bold uppercase tracking-[.14em] text-[#722F37]">Newly launched</span>}
+                      <span className="display text-[clamp(1.8rem,4vw,3.4rem)] leading-none">{product.name}</span>
+                    </span>
                     <span className="hidden text-[.7rem] font-bold uppercase tracking-[.15em] text-ink/45 md:block">{product.words}</span>
                     <span className="hidden text-[.7rem] font-bold uppercase tracking-[.12em] text-ink/45 md:block">45 g</span>
                     <span className="grid h-9 w-9 place-items-center rounded-full border border-ink/20"><ChevronDown className={`h-4 w-4 transition duration-500 ${open ? "rotate-180" : ""}`} /></span>

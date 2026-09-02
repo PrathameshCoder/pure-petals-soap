@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { BrandMark } from "@/components/shared/brand-mark";
 
-const links = [["Promise", "#promise"], ["Collection", "#collection"], ["Ritual", "#ritual"], ["Letters", "#letters"]];
+const links = [["Collection", "#collection"], ["Soap finder", "#soap-finder"], ["Ritual", "#ritual"], ["Letters", "#letters"]];
 
 export function SiteHeader({ cartCount, onOpenCart }: { cartCount: number; onOpenCart: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);

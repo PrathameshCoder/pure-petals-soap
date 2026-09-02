@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="grid gap-10 py-10 md:grid-cols-3">
           <div>
             <h3 className="mb-4 text-[.65rem] font-bold uppercase tracking-[.2em] text-gold">Explore</h3>
-            <div className="flex flex-col items-start gap-3 text-sm text-ink/60"><a href="#promise">Our promise</a><a href="#collection">The collection</a><a href="#ritual">The ritual</a><a href="#letters">Letters</a></div>
+            <div className="flex flex-col items-start gap-3 text-sm text-ink/60"><a href="#collection">The Collection</a><a href="#soap-finder">Soap Finder</a><a href="#ritual">The Ritual</a><a href="#letters">Letters</a></div>
           </div>
           <div>
             <h3 className="mb-4 text-[.65rem] font-bold uppercase tracking-[.2em] text-gold">Say hello</h3>

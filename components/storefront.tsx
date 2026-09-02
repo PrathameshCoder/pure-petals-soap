@@ -8,7 +8,7 @@ import { SiteFooter } from "@/components/footer/site-footer";
 import { SiteHeader } from "@/components/header/site-header";
 import { Hero } from "@/components/hero/hero";
 import { LettersSection } from "@/components/newsletter/letters-section";
-import { PromiseSection } from "@/components/promise/promise-section";
+import { SoapFinderSection } from "@/components/quiz/soap-finder-section";
 import { ProductMarquee } from "@/components/shared/product-marquee";
 import { QuoteSection } from "@/components/testimonial/quote-section";
 import { RitualSection } from "@/components/ritual/ritual-section";
@@ -53,8 +53,8 @@ export function Storefront() {
       <SiteHeader cartCount={count} onOpenCart={() => setCartOpen(true)} />
       <Hero />
       <ProductMarquee />
-      <PromiseSection />
       <CollectionSection onAdd={add} />
+      <SoapFinderSection onAdd={add} />
       <RitualSection />
       <QuoteSection />
       <LettersSection onMessage={notify} />

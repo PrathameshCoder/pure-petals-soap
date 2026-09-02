@@ -38,12 +38,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .badge-spin { animation: badge-spin 22s linear infinite; }
 .petal { animation-name: petal-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
 .hero-enter { animation: rise 1s cubic-bezier(.22,1,.36,1) both; }
+.quiz-enter { animation: quiz-enter .45s cubic-bezier(.22,1,.36,1) both; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes quiz-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes soap-float { to { transform: translateY(-12px); } }
 @keyframes badge-spin { to { transform: rotate(360deg); } }
 @keyframes petal-fall { 72% { opacity: 1; } to { transform: translateY(114vh) rotate(160deg); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .marquee-track, .soap-float, .badge-spin, .petal, .hero-enter { animation: none; }
+  .marquee-track, .soap-float, .badge-spin, .petal, .hero-enter, .quiz-enter { animation: none; }
 }
