@@ -12,13 +12,14 @@ import { SoapFinderSection } from "@/components/quiz/soap-finder-section";
 import { ProductMarquee } from "@/components/shared/product-marquee";
 import { QuoteSection } from "@/components/testimonial/quote-section";
 import { RitualSection } from "@/components/ritual/ritual-section";
-import type { Product } from "@/lib/products";
+import { getCartKey, type Cart } from "@/lib/cart";
+import type { Product, SoapSize } from "@/lib/products";
 
 export function Storefront() {
-  const [cart, setCart] = useState<Record<string, number>>({});
+  const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const count = useMemo(() => Object.values(cart).reduce((sum, quantity) => sum + quantity, 0), [cart]);
+  const count = useMemo(() => Object.values(cart).reduce((sum, line) => sum + line.quantity, 0), [cart]);
 
   useEffect(() => {
     document.body.style.overflow = cartOpen ? "hidden" : "";
@@ -30,15 +31,21 @@ export function Storefront() {
     window.setTimeout(() => setMessage(""), 2800);
   }
 
-  function add(product: Product) {
-    setCart((current) => ({ ...current, [product.id]: (current[product.id] ?? 0) + 1 }));
-    notify(`${product.name} — added to your bag`);
+  function add(product: Product, size: SoapSize) {
+    const key = getCartKey(product.id, size);
+    setCart((current) => ({
+      ...current,
+      [key]: { productId: product.id, size, quantity: (current[key]?.quantity ?? 0) + 1 },
+    }));
+    notify(`${product.name} · ${size} g — added to your bag`);
   }
 
-  function change(id: string, amount: number) {
+  function change(key: string, amount: number) {
     setCart((current) => {
-      const next = { ...current, [id]: (current[id] ?? 0) + amount };
-      if (next[id] <= 0) delete next[id];
+      const line = current[key];
+      if (!line) return current;
+      const next = { ...current, [key]: { ...line, quantity: line.quantity + amount } };
+      if (next[key].quantity <= 0) delete next[key];
       return next;
     });
   }

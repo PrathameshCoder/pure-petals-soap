@@ -37,7 +37,7 @@ export function Hero() {
             <a href="#ritual" className="border-b border-ink/60 py-2 text-[.72rem] font-bold uppercase tracking-[.16em] text-ink/60 hover:text-ink">Our ritual</a>
           </div>
           <ul className="flex list-none flex-wrap gap-x-6 gap-y-3 text-[.68rem] font-bold uppercase tracking-[.16em] text-ink/60">
-            {["7 botanical blends", "45 g per bar", "4-week cure", "Zero synthetics"].map((item, index) => <li key={item} className={index ? "border-l border-ink/15 pl-6" : ""}>{item}</li>)}
+            {["7 botanical blends", "45 g & 85 g bars", "4-week cure", "Zero synthetics"].map((item, index) => <li key={item} className={index ? "border-l border-ink/15 pl-6" : ""}>{item}</li>)}
           </ul>
         </div>
         <div className="relative mx-auto flex w-full max-w-[560px] flex-col items-center [perspective:1100px]">

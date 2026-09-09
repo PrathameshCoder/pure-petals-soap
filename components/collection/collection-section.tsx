@@ -4,10 +4,13 @@ import { useState, type MouseEvent } from "react";
 import { ChevronDown, Droplets, Leaf, ShoppingBag, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { SoapBar } from "@/components/shared/soap-bar";
-import { products, type Product } from "@/lib/products";
+import { products, type Product, type SoapSize } from "@/lib/products";
 
-export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void }) {
+const soapSizes: SoapSize[] = [45, 85];
+
+export function CollectionSection({ onAdd }: { onAdd: (product: Product, size: SoapSize) => void }) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, SoapSize>>({});
   const [preview, setPreview] = useState<{ product: Product; x: number; y: number } | null>(null);
 
   function movePreview(event: MouseEvent, product: Product) {
@@ -24,6 +27,7 @@ export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void
         <div className="border-t border-ink/20">
           {products.map((product, index) => {
             const open = openId === product.id;
+            const selectedSize = selectedSizes[product.id] ?? 45;
             return (
               <Reveal key={product.id} delay={index * 60}>
                 <article id={`product-${product.id}`} className="scroll-mt-24 border-b border-ink/20">
@@ -34,7 +38,7 @@ export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void
                       <span className="display text-[clamp(1.8rem,4vw,3.4rem)] leading-none">{product.name}</span>
                     </span>
                     <span className="hidden text-[.7rem] font-bold uppercase tracking-[.15em] text-ink/45 md:block">{product.words}</span>
-                    <span className="hidden text-[.7rem] font-bold uppercase tracking-[.12em] text-ink/45 md:block">45 g</span>
+                    <span className="hidden text-[.7rem] font-bold uppercase tracking-[.12em] text-ink/45 md:block">45 / 85 g</span>
                     <span className="grid h-9 w-9 place-items-center rounded-full border border-ink/20"><ChevronDown className={`h-4 w-4 transition duration-500 ${open ? "rotate-180" : ""}`} /></span>
                   </button>
                   <div className={`grid transition-[grid-template-rows] duration-700 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
@@ -49,7 +53,17 @@ export function CollectionSection({ onAdd }: { onAdd: (product: Product) => void
                             })}
                           </ul>
                           <div className="mt-7"><span className="text-[.65rem] font-bold uppercase tracking-[.18em] text-ink/45">Key ingredients</span><div className="mt-3 flex flex-wrap gap-2">{product.ingredients.map((ingredient) => <span key={ingredient} className="rounded-full border border-ink/15 px-3 py-2 text-[.65rem] font-bold uppercase tracking-[.1em]">{ingredient}</span>)}</div></div>
-                          <div className="mt-8 flex items-center gap-6"><span className="display text-3xl">₹{product.price}</span><button onClick={() => onAdd(product)} className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-ink px-6 text-[.7rem] font-bold uppercase tracking-[.15em] text-paper transition hover:bg-[#1a2315]">Add to bag <ShoppingBag className="h-4 w-4" /></button></div>
+                          <div className="mt-8">
+                            <span className="text-[.65rem] font-bold uppercase tracking-[.18em] text-ink/45">Choose size</span>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {soapSizes.map((size) => (
+                                <button key={size} type="button" aria-pressed={selectedSize === size} onClick={() => setSelectedSizes((current) => ({ ...current, [product.id]: size }))} className={`min-w-28 rounded-full border px-4 py-2.5 text-xs font-bold tracking-[.08em] transition ${selectedSize === size ? "border-ink bg-ink text-paper" : "border-ink/20 text-ink/60 hover:border-ink/45 hover:text-ink"}`}>
+                                  {size} g · ₹{product.prices[size]}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="mt-6 flex items-center gap-6"><span className="display text-3xl">₹{product.prices[selectedSize]}</span><button onClick={() => onAdd(product, selectedSize)} className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-ink px-6 text-[.7rem] font-bold uppercase tracking-[.15em] text-paper transition hover:bg-[#1a2315]">Add to bag <ShoppingBag className="h-4 w-4" /></button></div>
                         </div>
                         <div className="relative mx-auto flex w-full max-w-[390px] items-center"><div className="absolute inset-[7%] rounded-full border border-ink/15" /><div className="soap-float relative"><SoapBar product={product} /></div></div>
                       </div>

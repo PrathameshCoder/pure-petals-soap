@@ -3,11 +3,13 @@ export type Benefit = {
   description: string;
 };
 
+export type SoapSize = 45 | 85;
+
 export type Product = {
   id: string;
   name: string;
   words: string;
-  price: number;
+  prices: Record<SoapSize, number>;
   base: string;
   dark: string;
   light: string;
@@ -22,7 +24,7 @@ export const products: Product[] = [
     id: "crimson",
     name: "Crimson Seduction",
     words: "Hydrates · Revitalizes · Antioxidant-Rich",
-    price: 79,
+    prices: { 45: 79, 85: 129 },
     base: "#722F37",
     dark: "#440000",
     light: "#990F02",
@@ -39,7 +41,7 @@ export const products: Product[] = [
     id: "honey",
     name: "Milk & Honey",
     words: "Hydrate · Repair · Soften",
-    price: 59,
+    prices: { 45: 59, 85: 109 },
     base: "#EDDBB0",
     dark: "#B8862B",
     light: "#F7EBCB",
@@ -56,7 +58,7 @@ export const products: Product[] = [
     id: "avocado",
     name: "Avocado",
     words: "Nourish · Restore · Protect",
-    price: 59,
+    prices: { 45: 59, 85: 109 },
     base: "#9AAB76",
     dark: "#5B6B3D",
     light: "#BFC99B",
@@ -73,7 +75,7 @@ export const products: Product[] = [
     id: "neem",
     name: "Neem & Tulsi",
     words: "Purify · Clarify · Balance",
-    price: 59,
+    prices: { 45: 59, 85: 109 },
     base: "#A9B98B",
     dark: "#66744A",
     light: "#CBD5AF",
@@ -90,7 +92,7 @@ export const products: Product[] = [
     id: "goat",
     name: "Goat Milk",
     words: "Soothe · Nourish · Calm",
-    price: 59,
+    prices: { 45: 59, 85: 109 },
     base: "#F2EADB",
     dark: "#B4A47E",
     light: "#FBF6EB",
@@ -107,7 +109,7 @@ export const products: Product[] = [
     id: "saffron",
     name: "Royal Saffron",
     words: "Brighten · Glow · Indulge",
-    price: 69,
+    prices: { 45: 69, 85: 119 },
     base: "#E2A44C",
     dark: "#A86F1E",
     light: "#F0C283",
@@ -124,7 +126,7 @@ export const products: Product[] = [
     id: "citrus",
     name: "Citrus Euphoria",
     words: "Refresh · Energise · Uplift",
-    price: 59,
+    prices: { 45: 59, 85: 109 },
     base: "#D5DC96",
     dark: "#8F9A3E",
     light: "#E8EDB8",

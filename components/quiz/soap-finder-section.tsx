@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, RotateCcw, ShoppingBag, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { SoapBar } from "@/components/shared/soap-bar";
-import { products, type Product } from "@/lib/products";
+import { products, type Product, type SoapSize } from "@/lib/products";
 
 type Scores = Record<string, number>;
 
@@ -58,6 +58,8 @@ const questions: QuizQuestion[] = [
   },
 ];
 
+const soapSizes: SoapSize[] = [45, 85];
+
 function getRecommendation(answers: QuizOption[]) {
   const totals: Scores = {};
   for (const answer of answers) {
@@ -68,9 +70,10 @@ function getRecommendation(answers: QuizOption[]) {
   return products.reduce((best, product) => (totals[product.id] ?? 0) > (totals[best.id] ?? 0) ? product : best, products[0]);
 }
 
-export function SoapFinderSection({ onAdd }: { onAdd: (product: Product) => void }) {
+export function SoapFinderSection({ onAdd }: { onAdd: (product: Product, size: SoapSize) => void }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<QuizOption[]>([]);
+  const [selectedSize, setSelectedSize] = useState<SoapSize>(45);
   const finished = step === questions.length;
   const recommendation = useMemo(() => finished ? getRecommendation(answers) : null, [answers, finished]);
   const question = questions[step];
@@ -86,6 +89,7 @@ export function SoapFinderSection({ onAdd }: { onAdd: (product: Product) => void
 
   function restart() {
     setAnswers([]);
+    setSelectedSize(45);
     setStep(0);
   }
 
@@ -142,8 +146,11 @@ export function SoapFinderSection({ onAdd }: { onAdd: (product: Product) => void
                     <h3 className="display mt-3 text-[clamp(2.5rem,5vw,4rem)] font-normal leading-none">{recommendation.name}</h3>
                     <p className="mt-3 text-[.68rem] font-bold uppercase tracking-[.16em] text-ink/45">{recommendation.words}</p>
                     <p className="mt-5 max-w-[48ch] text-sm leading-7 text-ink/60">Based on what your skin needs and the ritual you enjoy, this bar is your strongest match. {recommendation.benefits[0]?.description}</p>
+                    <div className="mt-6 flex flex-wrap gap-2" aria-label="Choose soap size">
+                      {soapSizes.map((size) => <button key={size} type="button" aria-pressed={selectedSize === size} onClick={() => setSelectedSize(size)} className={`rounded-full border px-4 py-2 text-xs font-bold tracking-[.08em] transition ${selectedSize === size ? "border-ink bg-ink text-paper" : "border-ink/20 text-ink/60 hover:border-ink/45 hover:text-ink"}`}>{size} g · ₹{recommendation.prices[size]}</button>)}
+                    </div>
                     <div className="mt-7 flex flex-wrap items-center gap-3">
-                      <button type="button" onClick={() => onAdd(recommendation)} className="inline-flex min-h-12 items-center gap-3 rounded-full bg-ink px-6 text-[.68rem] font-bold uppercase tracking-[.15em] text-paper transition hover:bg-[#1a2315]">Add to bag · ₹{recommendation.price}<ShoppingBag className="h-4 w-4" /></button>
+                      <button type="button" onClick={() => onAdd(recommendation, selectedSize)} className="inline-flex min-h-12 items-center gap-3 rounded-full bg-ink px-6 text-[.68rem] font-bold uppercase tracking-[.15em] text-paper transition hover:bg-[#1a2315]">Add to bag · ₹{recommendation.prices[selectedSize]}<ShoppingBag className="h-4 w-4" /></button>
                       <a href={`#product-${recommendation.id}`} className="inline-flex min-h-12 items-center border-b border-ink/45 px-2 text-[.68rem] font-bold uppercase tracking-[.15em] text-ink/55 transition hover:text-ink">See its story</a>
                     </div>
                     <button type="button" onClick={restart} className="mt-7 inline-flex items-center gap-2 text-[.65rem] font-bold uppercase tracking-[.16em] text-ink/40 transition hover:text-ink"><RotateCcw className="h-3.5 w-3.5" />Retake the quiz</button>
